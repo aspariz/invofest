@@ -1,13 +1,55 @@
+import { Routes, Route } from "react-router-dom";
 import RegisterForm from "./Pages/RegisterForm";
-
+import LoginForm from "./Pages/LoginForm";
+import Beranda from "./Pages/Beranda";
+import Seminar from "./Pages/Seminar";
+import TalkShow from "./Pages/TalkShow";
+import MainLayout from "./Layout/MainLayout";
+import AuthLayouts from "./Layout/AuthLayout";
+import ProtectedRoutes from "./Routes/ProtectedRoutes";
+import DashboardIndex from "./Dashboard/DashboardIndex";
+import DashboardLayouts from "./Layout/DashboardLayout";
+// import CategoryIndex from "./Dashboard/Category/CategoryIndex";
+import CategoryIndex from "./Dashboard/Category/CreateCategory";
+import EventIndex from "./Dashboard/Event/EventIndex";
+import CategoryCreate from "./Dashboard/Category/CreateCategory";
+import SeminarIndex from "./Dashboard/Seminar/SeminarIndex";
+import SpeakerCreate from "./Dashboard/Seminar/SpeakCreate";
+import EventCreate from "./Dashboard/Event/CreateEvent";
+import Competition from "./Pages/Competition";
+import Workshop from "./Pages/WorkShop";
 
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <RegisterForm/>
-      {/* <LoginForm/> */}
+    <Routes>
+      {/* PUBLIC */}
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Beranda />} />
+        <Route path="/competition" element={<Competition />} />
+        <Route path="/seminar" element={<Seminar />} />
+        <Route path="/workshop" element={<Workshop />} />
+        <Route path="/talkshow" element={<TalkShow />} />
+      </Route>
 
-    </div>
+      {/* AUTH */}
+      <Route element={<AuthLayouts />}>
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/login" element={<LoginForm />} />
+      </Route>
+
+      {/* DASHBOARD */}
+      <Route element={<ProtectedRoutes />}>
+        <Route element={<DashboardLayouts />}>
+          <Route path="/dashboard" element={<DashboardIndex />} />
+          <Route path="/dashboard/category" element={<CategoryIndex />} />
+          <Route path="/dashboard/category/create" element={<CategoryCreate />} />
+          <Route path="/dashboard/event" element={<EventIndex />} />
+          <Route path="/dashboard/event/new" element={<EventCreate />} />
+          <Route path="/dashboard/seminar" element={<SeminarIndex />} />
+          <Route path="/dashboard/seminar/speaker" element={<SpeakerCreate />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
